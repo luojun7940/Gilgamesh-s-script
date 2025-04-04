@@ -3,6 +3,7 @@
 #include"steps.h"
 
 int main() {
+    std::cout << "这是一个简单的开发中的金闪闪脚本测试\n\n鼠鼠会不定时更新QAQ，源码已发GitHub。\n\n" << std::endl;
     // 输出读取到的设置
     char line[50][MAX_LINE_LENGTH] = { 0 };
     for (int i = 0; i < 50; i++) {
@@ -14,7 +15,7 @@ int main() {
     
     printf("读取到设置：\n");
     for (int i = 0;i < 50;i++) {
-        if (line[i] != "\n") {
+        if (line[i][0] != '\0') {
             printf("%s\n", line[i]);
         }
     }
