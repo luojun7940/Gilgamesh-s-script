@@ -1,0 +1,10 @@
+mumu模拟器地址:"D:\Game\MuMu Player 12\shell\MuMuPlayer.exe" -v 3
+adb地址:"D:\\Game\\MuMu Player 12\\shell\\adb.exe"
+连接地址:127.0.0.1:16480
+
+
+1：16384
+2：16416
+3：16448
+4：16480
+关闭adb 连接：adb kill-server
