@@ -7,12 +7,18 @@
 
 首先需要完成地址的设置：<br>
 1、打开address.txt文件。<br>
+
+
 2、第一行填模拟器的地址；<br>
   模拟器地址可以右键你要使用的模拟器的快捷方式，点击属性，在目标那一行看到;<br>
+
+  
 3、第二行是adb地址；可以将模拟器地址后面改为adb.exe得到；<br>
 例：模拟器地址"D:\Game\MuMu Player 12\shell\MuMuPlayer.exe" -v 3  <br>
 那么adb地址就是"D:\Game\MuMu Player 12\shell\adb.exe"；<br>
 注意添加双引号。<br>
+
+
 4、第三行是模拟器的序列号，可以通过查询知道模拟器序列号前半部分，后半部分可以通过多开器或模拟器设置查询。mumu模拟器序列号一般为“127.0.0.1:xxxxx”,后半部分可以通过mumu多开器的adb按钮查询。<br>
 
 
