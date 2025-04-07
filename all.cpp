@@ -68,9 +68,9 @@ MatchResult image_comparison(const char* device_serial, const char* adbPath, con
         match.y = max_loc.y;
         match.status = 0;  // 表示匹配成功
     }
-    /*else {
+    else {
         std::cout << "未找到符合要求的匹配结果" << std::endl;
-    }*/
+    }
 
     return match;
 }
@@ -590,7 +590,7 @@ wchar_t* charToWChar(const char* str) {
 }
 
 // 读取指定行的内容
-int readLineFromFile(const char* filename, int x, char* line) {
+int readLineFromFile(const char* filename, int x,char* line) {
     FILE* file;
     errno_t err = fopen_s(&file, filename, "r");  // 使用 fopen_s 打开文件
     if (err != 0) {

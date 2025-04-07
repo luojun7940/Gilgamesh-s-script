@@ -37,4 +37,7 @@ void alliance(const char* device_serial, const char* adbPath, const char* line);
 //活动
 void activity(const char* device_serial, const char* adbPath, const char* line);
 
+//等级提升任务
+void level_up(const char* device_serial, const char* adbPath, const char* line);
+
 #endif

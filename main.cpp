@@ -12,11 +12,11 @@ int main() {
 
     int size = sizeof(line) / sizeof(line[0]);
     change(line, size);
-    
+
     printf("读取到设置：\n");
     for (int i = 0;i < 50;i++) {
         if (line[i][0] != '\0') {
-            printf("%s\n", line[i]);
+            printf("%d、%s\n",i, line[i]);
         }
     }
     std::cout << "\n\n" << std::endl;
@@ -106,12 +106,12 @@ int main() {
 
     start(connectAddr, adbPath);
 
-    const char* checkpoint[20] = {"讨伐","邮箱","冒险","招募","探索","派驻","领取AP","任务","联盟","活动"};
-    for (int i = 0;i++ < 50;Sleep(500)) {
-        for (int j = 0;j < 20;j++) {
+    const char* checkpoint[11] = {"派驻","邮箱","冒险","招募","探索","讨伐","领取AP","任务","联盟","活动","等级提升"};
+    for (int i = 0;i++ < 50;Sleep(50)) {
+        for (int j = 0;j < 11;j++) {
             if (isSubstring(line[i], checkpoint[j])) {
                 switch (j) {
-                case 0:crusade(connectAddr, adbPath, line[i]);
+                case 0:dispatch(connectAddr, adbPath, line[i]);
                     break;
                 case 1:email(connectAddr, adbPath, line[i]);
                     break;
@@ -121,7 +121,7 @@ int main() {
                     break;
                 case 4:explore(connectAddr, adbPath, line[i]);
                     break;
-                case 5:dispatch(connectAddr, adbPath, line[i]);
+                case 5:crusade(connectAddr, adbPath, line[i]);
                     break;
                 case 6:receive_AP(connectAddr, adbPath, line[i]);
                     break;
@@ -131,9 +131,11 @@ int main() {
                     break;
                 case 9:activity(connectAddr, adbPath, line[i]);
                     break;
+                case 10:level_up(connectAddr, adbPath, line[i]);
+                    break;
                 }
+                break;
             }
-            break;
         }
     }
     std::cout << "脚本结束\n\n" << std::endl;
