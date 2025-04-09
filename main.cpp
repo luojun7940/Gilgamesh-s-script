@@ -3,7 +3,7 @@
 #include"steps.h"
 
 int main() {
-    std::cout << "这是一个简单的开发中的金闪闪脚本测试\n\n鼠鼠会不定时更新QAQ，源码已发GitHub。\n\n" << std::endl;
+    std::cout << "这是一个简单的开发中的金闪闪脚本测试\n\n鼠鼠会不定时更新QAQ，源码已发GitHub。\n\n——作者：洛桾\n\n" << std::endl;
     // 输出读取到的设置
     char line[50][MAX_LINE_LENGTH] = { 0 };
     for (int i = 0; i < 50; i++) {
@@ -106,9 +106,9 @@ int main() {
 
     start(connectAddr, adbPath);
 
-    const char* checkpoint[11] = {"派驻","邮箱","冒险","招募","探索","讨伐","领取AP","任务","联盟","活动","等级提升"};
+    const char* checkpoint[12] = {"派驻","邮箱","冒险","招募","探索","讨伐","领取AP","任务","联盟","活动","等级提升","竞技场"};
     for (int i = 0;i++ < 50;Sleep(50)) {
-        for (int j = 0;j < 11;j++) {
+        for (int j = 0;j < 12;j++) {
             if (isSubstring(line[i], checkpoint[j])) {
                 switch (j) {
                 case 0:dispatch(connectAddr, adbPath, line[i]);
@@ -132,6 +132,8 @@ int main() {
                 case 9:activity(connectAddr, adbPath, line[i]);
                     break;
                 case 10:level_up(connectAddr, adbPath, line[i]);
+                    break;
+                case 11:arena(connectAddr, adbPath, line[i]);
                     break;
                 }
                 break;

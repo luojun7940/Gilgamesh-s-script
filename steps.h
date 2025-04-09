@@ -40,4 +40,7 @@ void activity(const char* device_serial, const char* adbPath, const char* line);
 //等级提升任务
 void level_up(const char* device_serial, const char* adbPath, const char* line);
 
+//竞技场
+void arena(const char* device_serial, const char* adbPath, const char* line);
+
 #endif

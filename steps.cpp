@@ -1203,3 +1203,113 @@ void level_up(const char* device_serial, const char* adbPath, const char* line) 
 
 	std::cout << "提升等级任务结束\n\n" << std::endl;
 }
+
+void arena(const char* device_serial, const char* adbPath, const char* line) {
+	MatchResult match;
+	cv::Mat croppedImage;
+	int rand(void);
+
+	//竞技场
+	std::cout << "竞技场\n\n" << std::endl;
+	for (int i = 0;i++ < 10;Sleep(500)) {
+		match = image_comparison(device_serial, adbPath, ".\\image\\home.png", threshold80);
+		if (match.status == 0) {
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			Sleep(1000);
+			break;
+		}
+	}
+
+	for (int i = 0;i++ < 10;Sleep(500)) {
+		match = image_comparison(device_serial, adbPath, ".\\image\\arena\\冒险.png", threshold97);
+		if (match.status == 0) {
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			Sleep(2000);
+			break;
+		}
+	}
+
+	for (int i = 0;i++ < 10;Sleep(500)) {
+		match = image_comparison(device_serial, adbPath, ".\\image\\arena\\竞技场.png", threshold97);
+		if (match.status == 0) {
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			Sleep(1000);
+			break;
+		}
+	}
+
+	for (int i = 0;i++ < 4;Sleep(500)) {
+		match = image_comparison(device_serial, adbPath, ".\\image\\arena\\挑战1.png", threshold97);
+		if (match.status == 0) {
+			break;
+		}
+		else {
+			adbTouchDown(device_serial, adbPath, 1225, 35);
+		}
+	}
+
+	//获取挑战次数
+	int x = 5;
+	const char* check[5] = {"1次","2次","3次","4次","5次"};
+	for (int i = 0;i < 5;i++) {
+		if (isSubstring(line, check[i])) {
+			x = i + 1;
+			std::cout << "挑战次数：" << x << "次\n\n" << std::endl;
+		}
+	}
+	//开始挑战
+	for (int i = 0;i < x;i++) {
+		match = image_comparison(device_serial, adbPath, ".\\image\\arena\\挑战1.png", threshold97);
+		if (match.status == 0) {
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			Sleep(1000);
+		}
+
+		match = image_comparison(device_serial, adbPath, ".\\image\\arena\\挑战2.png", threshold97);
+		if (match.status == 0) {
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			Sleep(2000);
+		}
+
+		match = image_comparison(device_serial, adbPath, ".\\image\\arena\\挑战2.png", threshold97);
+		if (match.status == 0) {
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			Sleep(2000);
+		}
+
+		//检测次数是否不足
+		match = image_comparison(device_serial, adbPath, ".\\image\\arena\\确定.png", threshold97);
+		if (match.status == 0) {
+			std::cout << "次数不足 \n\n" << std::endl;
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			Sleep(2000);
+			break;
+		}
+		else {
+			match = image_comparison(device_serial, adbPath, ".\\image\\arena\\返回.png", threshold97);
+			if (match.status == 0) {
+				adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+				Sleep(2000);
+			}
+			else {
+				match = image_comparison(device_serial, adbPath, ".\\image\\arena\\离开.png", threshold97);
+				if (match.status == 0) {
+					adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+					Sleep(2000);
+				}
+			}
+		}
+	}
+
+	for (int i = 0;i++ < 10;Sleep(500)) {
+		match = image_comparison(device_serial, adbPath, ".\\image\\home.png", threshold80);
+		if (match.status == 0) {
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			Sleep(1000);
+			break;
+		}
+	}
+
+	//竞技场结束
+	std::cout << "竞技场结束\n\n" << std::endl;
+}
