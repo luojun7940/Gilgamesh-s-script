@@ -1,5 +1,6 @@
 使用说明：<br>
 直接下载zip文件和git clone都可以。<br>
+注意将Setting.txt、image、address.txt文件放入release文件中（release文件中是本体，其他的是材料）
 点击.exe文件即可开始。<br>
 因为大量使用system函数会被杀毒软件认为是木马，给个信任文件就行，不需要关闭杀毒软件。。。<br>
 但是系统自带的杀毒不会识别为木马。<br>
@@ -20,6 +21,7 @@
 3、第二行是adb地址；可以将模拟器地址后面改为adb.exe得到；<br>
 例：模拟器地址"D:\Game\MuMu Player 12\shell\MuMuPlayer.exe" -v 3  <br>
 那么adb地址就是"D:\Game\MuMu Player 12\shell\adb.exe"；<br>
+如果不是mumu模拟器可以去模拟器目录下搜索adb.exe文件，复制路径。
 注意添加双引号。<br>
 
 
