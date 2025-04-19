@@ -52,8 +52,8 @@ cv::Mat adb_screenshot_and_crop(const char* device_serial, const char* adbPath, 
 // 对裁剪后的图像进行 OCR 识别
 std::unique_ptr<char[]> ocrImage(const cv::Mat& croppedImage);
 
-// 执行系统命令并检查返回状态
-void execute_command(const char* command);
+// 执行命令并返回输出
+std::string executeCommandAndGetOutput(const char* command);
 
 // 判断提取的文本是否包含样本文本的子串
 int isSubstring(const char* extractedText, const char* sampleText);

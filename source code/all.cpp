@@ -257,17 +257,21 @@ std::unique_ptr<char[]> ocrImage(const cv::Mat& croppedImage) {
     return resultStr;
 }
 
-// 执行系统命令并检查返回状态
-void execute_command(const char* command) {
-    int result = system(command);
-    if (result == -1) {
-        perror("Error running command");
-        exit(EXIT_FAILURE);
+// 执行命令并返回输出
+std::string executeCommandAndGetOutput(const char* command) {
+    std::string output;
+    FILE* pipe = _popen(command, "r");
+    if (!pipe) {
+        return output;
     }
-    else if (result != 0) {
-        fprintf(stderr, "Command '%s' failed.\n", command);
-        exit(EXIT_FAILURE);
+    char buffer[128];
+    while (!feof(pipe)) {
+        if (fgets(buffer, 128, pipe) != NULL) {
+            output += buffer;
+        }
     }
+    _pclose(pipe);
+    return output;
 }
 
 // 检查样例文本是否是提取文本的子串
@@ -399,48 +403,65 @@ int readAddressFromFile(char* address, size_t size) {
 
 // 执行系统命令
 void executeCommand(const char* command) {
-    int result = system(command);
-    if (result != 0) {
-        printf("执行命令 %s 失败，返回码: %d\n", command, result);
+    STARTUPINFO si;
+    PROCESS_INFORMATION pi;
+
+    ZeroMemory(&si, sizeof(si));
+    si.cb = sizeof(si);
+    ZeroMemory(&pi, sizeof(pi));
+
+    // 将多字节字符串转换为宽字符字符串
+    int wideLen = MultiByteToWideChar(CP_ACP, 0, command, -1, NULL, 0);
+    std::wstring wideCommand(wideLen, L'\0');
+    MultiByteToWideChar(CP_ACP, 0, command, -1, &wideCommand[0], wideLen);
+
+    // 创建新进程执行命令
+    if (!CreateProcess(NULL, &wideCommand[0], NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
+        // 获取错误代码
+        DWORD errorCode = GetLastError();
+        std::cerr << "执行命令 " << command << " 失败，错误代码: " << errorCode << std::endl;
+        return;
     }
+
+    // 等待进程结束
+    WaitForSingleObject(pi.hProcess, INFINITE);
+
+    // 获取进程退出代码
+    DWORD exitCode;
+    GetExitCodeProcess(pi.hProcess, &exitCode);
+    if (exitCode != 0) {
+        std::cerr << "命令 " << command << " 执行失败，退出代码: " << exitCode << std::endl;
+    }
+
+    // 关闭进程和线程句柄
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
 }
 
 // 检查模拟器是否连接成功
 int isEmulatorConnected(const char* adbPath, const char* connectAddr) {
     char devicesCommand[256];
-    // 构造将 adb devices 输出重定向到临时文件的命令
-    snprintf(devicesCommand, sizeof(devicesCommand), "\"%s\" devices > adb_devices_output.txt", adbPath);
-    // 执行命令
-    executeCommand(devicesCommand);
+    // 拼接 adb devices 命令
+    snprintf(devicesCommand, sizeof(devicesCommand), "\"%s\" devices", adbPath);
 
-    // 打开临时文件
-    FILE* file;
-    errno_t err = fopen_s(&file, "adb_devices_output.txt", "r");
-    if (err != 0 || file == NULL) {
-        printf("无法打开临时文件 adb_devices_output.txt\n");
-        return 0;
-    }
+    // 执行命令并获取输出
+    std::string output = executeCommandAndGetOutput(devicesCommand);
 
-    char buffer[128];
+    std::istringstream iss(output);
+    std::string line;
     int connected = 0;
-    while (fgets(buffer, sizeof(buffer), file) != NULL) {
-        // 去除换行符
-        buffer[strcspn(buffer, "\n")] = 0;
-        // 分割字符串，查找设备地址和状态
-        char* token;
-        char* context = NULL;  // 用于保存上下文信息
-        token = strtok_s(buffer, " \t", &context);
-        if (token != NULL && strcmp(token, connectAddr) == 0) {
-            token = strtok_s(NULL, " \t", &context);
-            if (token != NULL && strcmp(token, "device") == 0) {
+    while (std::getline(iss, line)) {
+        // 分割字符串获取设备地址和状态
+        size_t pos = line.find('\t');
+        if (pos != std::string::npos) {
+            std::string addr = line.substr(0, pos);
+            std::string status = line.substr(pos + 1);
+            if (addr == connectAddr && status == "device") {
                 connected = 1;
                 break;
             }
         }
     }
-    fclose(file);
-    // 删除临时文件
-    remove("adb_devices_output.txt");
     return connected;
 }
 
@@ -450,7 +471,7 @@ void adb_connect(const char* adbPath, const char* connectAddr) {
     char command[1024];
     // 拼接完整的 ADB 连接命令
     snprintf(command, sizeof(command), "\"%s\" connect %s", adbPath, connectAddr);
-    execute_command(command);
+    executeCommandAndGetOutput(command);
 }
 
 // 从文件中读取地址

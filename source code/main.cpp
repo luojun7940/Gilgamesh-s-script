@@ -83,7 +83,7 @@ int main() {
     char command[256];
     // 拼接带有 -s 选项的 ADB 命令，用于指定设备
     snprintf(command, sizeof(command), "%s -s %s shell am start -n %s/%s", adbPath, connectAddr, packageName, activityName);
-    execute_command(command);
+    executeCommandAndGetOutput(command);
 
     for (int j = 0; j < 10; j++, Sleep(500)) {
         // 检查应用是否已启动
