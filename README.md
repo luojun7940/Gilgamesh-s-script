@@ -1,6 +1,6 @@
 使用说明：<br>
 直接下载zip文件和git clone都可以。<br>
-注意将Setting.txt、image、address.txt文件放入release文件中（release文件中是本体，其他的是材料）
+release文件中是本体，其他的是材料<br>
 点击.exe文件即可开始。<br>
 因为大量使用system函数会被杀毒软件认为是木马，给个信任文件就行，不需要关闭杀毒软件。。。<br>
 但是系统自带的杀毒不会识别为木马。<br>
