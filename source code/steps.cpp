@@ -1363,7 +1363,7 @@ void ruins(const char* device_serial, const char* adbPath, const char* line) {
 	for (int i = 0; i < 5; i++,Sleep(500)) {
 		match = image_comparison(device_serial, adbPath, ".\\image\\ruins\\关闭.png", threshold97);
 		if (match.status == 0) {
-			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 10, match.y + rand() % 10);
 			Sleep(1000);
 		}
 	}
@@ -1400,11 +1400,11 @@ void ruins(const char* device_serial, const char* adbPath, const char* line) {
 					Sleep(1000);
 					match = image_comparison(device_serial, adbPath, ".\\image\\ruins\\确定.png", threshold97);
 					if (match.status == 0) {
-						adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+						adbTouchDown(device_serial, adbPath, match.x + rand() % 10, match.y + rand() % 10);
 						Sleep(1000);
 						match = image_comparison(device_serial, adbPath, ".\\image\\ruins\\关闭.png", threshold97);
 						if (match.status == 0) {
-							adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+							adbTouchDown(device_serial, adbPath, match.x + rand() % 10, match.y + rand() % 10);
 							Sleep(1000);
 							a = 1;
 							break;
@@ -1429,7 +1429,7 @@ void ruins(const char* device_serial, const char* adbPath, const char* line) {
 		for (int j = 0; j < 10; j++, Sleep(500)) {
 			match = image_comparison(device_serial, adbPath, ".\\image\\ruins\\关闭.png", threshold97);
 			if (match.status == 0) {
-				adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+				adbTouchDown(device_serial, adbPath, match.x + rand() % 10, match.y + rand() % 10);
 				Sleep(1000);
 				break;
 			}
@@ -1454,24 +1454,27 @@ void ruins(const char* device_serial, const char* adbPath, const char* line) {
 	for (int i = 0; i < 5; i++, Sleep(500)) {
 		match = image_comparison(device_serial, adbPath, ".\\image\\ruins\\关闭.png", threshold97);
 		if (match.status == 0) {
-			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 10, match.y + rand() % 10);
 			Sleep(1000);
+			break;
 		}
 	}
 
 	for (int i = 0; i < 5; i++,Sleep(500)) {
 		match = image_comparison(device_serial, adbPath, ".\\image\\ruins\\再战.png", threshold97);
 		if (match.status == 0) {
-			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
-			Sleep(1000);
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 10, match.y + rand() % 10);
+			Sleep(1000); 
+			break;
 		}
 	}
 
 	for (int i = 0; i < 5; i++, Sleep(500)) {
 		match = image_comparison(device_serial, adbPath, ".\\image\\ruins\\确定.png", threshold97);
 		if (match.status == 0) {
-			adbTouchDown(device_serial, adbPath, match.x + rand() % 20, match.y + rand() % 20);
+			adbTouchDown(device_serial, adbPath, match.x + rand() % 10, match.y + rand() % 10);
 			Sleep(1000);
+			break;
 		}
 	}
 	goto start;
